@@ -3,3 +3,6 @@
 ################################################################################
 
 /AppLoadData/AppLoadData/bin/Debug
+/AppLoadData/AppLoadData/obj/Debug
+/AppLoadData/AppLoadData/bin/x64/Debug
+/AppLoadData/AppLoadData/obj/x64/Debug

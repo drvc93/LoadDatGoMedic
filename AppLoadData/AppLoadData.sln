@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLoadData", "AppLoadData\AppLoadData.csproj", "{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Debug|x64.ActiveCfg = Debug|x64
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Debug|x64.Build.0 = Debug|x64
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Release|x64.ActiveCfg = Release|x64
+		{ED3F5ADF-AA04-4888-8965-05C02B92FDA1}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30CF685B-3CA6-498D-A2E4-26B6A429DE3A}
+	EndGlobalSection
+EndGlobal
