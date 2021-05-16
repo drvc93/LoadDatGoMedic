@@ -4,12 +4,15 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using AppLoadData.Util;
+using System.Data;
+using System.Data.OleDb;
 
 namespace AppLoadData
 {
     public partial class Form1 : DevExpress.XtraBars.TabForm
     {
-        private ExcelDataSource excelDataSource { get; set; }
+       
+        private DataTable dtInfo { get; set; }
         string sSelectedPath { get; set; }
 
         public Form1()
@@ -43,12 +46,13 @@ namespace AppLoadData
         public void LoadData()
         {
 
-            excelDataSource = new ExcelDataSource();
-            excelDataSource.Name = "Excel Data Source";
-            excelDataSource.FileName = txtFilePath.Text;
-            ExcelWorksheetSettings worksheetSettings = new ExcelWorksheetSettings("Historico", "A1:U400000");
-            excelDataSource.SourceOptions = new ExcelSourceOptions(worksheetSettings);
-            excelDataSource.Fill();
+            /* excelDataSource = new ExcelDataSource();
+             excelDataSource.Name = "Excel Data Source";
+             excelDataSource.FileName = txtFilePath.Text;
+             ExcelWorksheetSettings worksheetSettings = new ExcelWorksheetSettings("Historico", "A1:U400000");
+             excelDataSource.SourceOptions = new ExcelSourceOptions(worksheetSettings);
+             excelDataSource.Fill();*/
+            dtInfo = ImportExcelXLS(txtFilePath.Text , true);
 
         }
 
@@ -61,9 +65,10 @@ namespace AppLoadData
         private void bgWorkerData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnLoad.Enabled = true;
-            gridviewDataLoad.DataSource = excelDataSource;
+            gridviewDataLoad.DataSource = dtInfo;
             lblCountRows.Text = "Numero de filas :" + gvDataLoad.DataRowCount.ToString();
             pgBar.Visible = false;
+            ///VerifyData();
         }
 
         private void btnFindFile_Click(object sender, EventArgs e)
@@ -88,6 +93,63 @@ namespace AppLoadData
             args.Text = message;
             args.Buttons = new DialogResult[] { DialogResult.OK };
             XtraMessageBox.Show(args).ToString();
+        }
+
+        public void VerifyData ()
+        {
+            for (int i = 0; i < gvDataLoad.DataRowCount; i++)
+            {
+                var lote = gvDataLoad.GetRowCellValue(i, "lote").ToString();
+                if  (string.IsNullOrEmpty(lote) || lote.ToString() == "0")
+                {
+                    gvDataLoad.SetRowCellValue(i, "Comentario", "Lote Invalido.");
+                    gvDataLoad.RefreshRow(i);
+
+                }
+
+            }
+        }
+
+
+        public  DataTable ImportExcelXLS(string FileName, bool hasHeaders)
+        {
+            string HDR = hasHeaders ? "Yes" : "No";
+            string strConn;
+            if (FileName.Substring(FileName.LastIndexOf('.')).ToLower() == ".xlsx")
+                strConn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + FileName + ";Extended Properties=\"Excel 12.0;HDR=" + HDR + ";IMEX=0\"";
+            else
+                strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + FileName + ";Extended Properties=\"Excel 8.0;HDR=" + HDR + ";IMEX=0\"";
+
+            DataSet output = new DataSet();
+            DataTable outputTable = new DataTable(Constants.EXCEL_SHEET);
+            using (OleDbConnection conn = new OleDbConnection(strConn))
+            {
+                conn.Open();
+
+                DataTable schemaTable = conn.GetOleDbSchemaTable(
+                    OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+
+                
+                    string sheet = Constants.EXCEL_SHEET;
+
+                    if (!sheet.EndsWith("_"))
+                    {
+                        try
+                        {
+                            OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + sheet + "]", conn);
+                            cmd.CommandType = CommandType.Text;
+                           
+                            output.Tables.Add(outputTable);
+                            new OleDbDataAdapter(cmd).Fill(outputTable);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message + string.Format("Sheet:{0}.File:F{1}", sheet, FileName), ex);
+                        }
+                    }
+                
+            }
+            return outputTable;
         }
     }
 }

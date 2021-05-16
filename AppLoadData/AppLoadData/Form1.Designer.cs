@@ -29,38 +29,16 @@ namespace AppLoadData
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo1 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo2 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo3 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo4 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo5 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo6 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo7 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo8 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo9 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo10 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo11 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo12 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo13 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo14 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo15 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo16 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo17 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo18 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo19 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo20 = new DevExpress.DataAccess.Excel.FieldInfo();
-            DevExpress.DataAccess.Excel.ExcelWorksheetSettings excelWorksheetSettings1 = new DevExpress.DataAccess.Excel.ExcelWorksheetSettings();
-            DevExpress.DataAccess.Excel.ExcelSourceOptions excelSourceOptions1 = new DevExpress.DataAccess.Excel.ExcelSourceOptions(excelWorksheetSettings1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabFormControl1 = new DevExpress.XtraBars.TabFormControl();
             this.tabFormPage1 = new DevExpress.XtraBars.TabFormPage();
             this.tabFormContentContainer1 = new DevExpress.XtraBars.TabFormContentContainer();
+            this.btnFindFile = new DevExpress.XtraEditors.SimpleButton();
+            this.txtFilePath = new DevExpress.XtraEditors.TextEdit();
             this.pgBar = new DevExpress.XtraWaitForm.ProgressPanel();
             this.lblCountRows = new System.Windows.Forms.Label();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
             this.gridviewDataLoad = new DevExpress.XtraGrid.GridControl();
-            this.excelDataSource1 = new DevExpress.DataAccess.Excel.ExcelDataSource();
             this.gvDataLoad = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colCodigoSupervisor = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStockDetailId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -84,15 +62,11 @@ namespace AppLoadData
             this.collote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colComent = new DevExpress.XtraGrid.Columns.GridColumn();
             this.bgWorkerData = new System.ComponentModel.BackgroundWorker();
-            this.txtFilePath = new DevExpress.XtraEditors.TextEdit();
-            this.btnFindFile = new DevExpress.XtraEditors.SimpleButton();
-            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tabFormControl1)).BeginInit();
             this.tabFormContentContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewDataLoad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvDataLoad)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabFormControl1
@@ -126,6 +100,27 @@ namespace AppLoadData
             this.tabFormContentContainer1.Name = "tabFormContentContainer1";
             this.tabFormContentContainer1.Size = new System.Drawing.Size(1110, 454);
             this.tabFormContentContainer1.TabIndex = 1;
+            // 
+            // btnFindFile
+            // 
+            this.btnFindFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFindFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnFindFile.ImageOptions.Image")));
+            this.btnFindFile.Location = new System.Drawing.Point(918, 3);
+            this.btnFindFile.Name = "btnFindFile";
+            this.btnFindFile.Size = new System.Drawing.Size(46, 49);
+            this.btnFindFile.TabIndex = 5;
+            this.btnFindFile.Click += new System.EventHandler(this.btnFindFile_Click);
+            // 
+            // txtFilePath
+            // 
+            this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFilePath.Enabled = false;
+            this.txtFilePath.Location = new System.Drawing.Point(371, 20);
+            this.txtFilePath.Name = "txtFilePath";
+            this.txtFilePath.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFilePath.Properties.Appearance.Options.UseFont = true;
+            this.txtFilePath.Size = new System.Drawing.Size(541, 32);
+            this.txtFilePath.TabIndex = 4;
             // 
             // pgBar
             // 
@@ -166,7 +161,6 @@ namespace AppLoadData
             this.gridviewDataLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridviewDataLoad.DataSource = this.excelDataSource1;
             this.gridviewDataLoad.Location = new System.Drawing.Point(3, 58);
             this.gridviewDataLoad.MainView = this.gvDataLoad;
             this.gridviewDataLoad.Name = "gridviewDataLoad";
@@ -174,77 +168,6 @@ namespace AppLoadData
             this.gridviewDataLoad.TabIndex = 0;
             this.gridviewDataLoad.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvDataLoad});
-            // 
-            // excelDataSource1
-            // 
-            this.excelDataSource1.FileName = "C:\\Users\\drvc_\\Desktop\\GoMedic\\Regularización_Fausty Jimenez.xlsx";
-            this.excelDataSource1.Name = "excelDataSource1";
-            this.excelDataSource1.ResultSchemaSerializable = resources.GetString("excelDataSource1.ResultSchemaSerializable");
-            fieldInfo1.Name = "StockDetailId";
-            fieldInfo1.Type = typeof(int);
-            fieldInfo2.Name = "CodigoSupervisor";
-            fieldInfo2.Type = typeof(double);
-            fieldInfo3.Name = "NombreSupervisor";
-            fieldInfo3.Type = typeof(string);
-            fieldInfo4.Name = "IdUser";
-            fieldInfo4.Type = typeof(double);
-            fieldInfo5.Name = "NombreVisitador";
-            fieldInfo5.Type = typeof(string);
-            fieldInfo6.Name = "CmpCode";
-            fieldInfo6.Type = typeof(double);
-            fieldInfo7.Name = "NombreMedico";
-            fieldInfo7.Type = typeof(string);
-            fieldInfo8.Name = "NombreEspecialidad";
-            fieldInfo8.Type = typeof(string);
-            fieldInfo9.Name = "Direccion";
-            fieldInfo9.Type = typeof(string);
-            fieldInfo10.Name = "Institucion";
-            fieldInfo10.Type = typeof(string);
-            fieldInfo11.Name = "mes";
-            fieldInfo11.Type = typeof(double);
-            fieldInfo12.Name = "FechaReporteVisita";
-            fieldInfo12.Type = typeof(System.DateTime);
-            fieldInfo13.Name = "HoraReporteVisita";
-            fieldInfo13.Type = typeof(System.DateTime);
-            fieldInfo14.Name = "IdCycle";
-            fieldInfo14.Type = typeof(double);
-            fieldInfo15.Name = "NombreCiclo";
-            fieldInfo15.Type = typeof(string);
-            fieldInfo16.Name = "NombreProducto";
-            fieldInfo16.Type = typeof(string);
-            fieldInfo17.Name = "CodigoProducto";
-            fieldInfo17.Type = typeof(short);
-            fieldInfo18.Name = "cantidad debio entregar";
-            fieldInfo18.Type = typeof(short);
-            fieldInfo19.Name = "guia";
-            fieldInfo19.Type = typeof(int);
-            fieldInfo20.Name = "lote";
-            fieldInfo20.Type = typeof(string);
-            this.excelDataSource1.Schema.AddRange(new DevExpress.DataAccess.Excel.FieldInfo[] {
-            fieldInfo1,
-            fieldInfo2,
-            fieldInfo3,
-            fieldInfo4,
-            fieldInfo5,
-            fieldInfo6,
-            fieldInfo7,
-            fieldInfo8,
-            fieldInfo9,
-            fieldInfo10,
-            fieldInfo11,
-            fieldInfo12,
-            fieldInfo13,
-            fieldInfo14,
-            fieldInfo15,
-            fieldInfo16,
-            fieldInfo17,
-            fieldInfo18,
-            fieldInfo19,
-            fieldInfo20});
-            excelWorksheetSettings1.CellRange = null;
-            excelWorksheetSettings1.WorksheetName = "Historico";
-            excelSourceOptions1.ImportSettings = excelWorksheetSettings1;
-            this.excelDataSource1.SourceOptions = excelSourceOptions1;
             // 
             // gvDataLoad
             // 
@@ -460,6 +383,7 @@ namespace AppLoadData
             this.colComent.FieldName = "Comentario";
             this.colComent.MinWidth = 25;
             this.colComent.Name = "colComent";
+            this.colComent.UnboundType = DevExpress.Data.UnboundColumnType.String;
             this.colComent.Visible = true;
             this.colComent.VisibleIndex = 20;
             this.colComent.Width = 94;
@@ -468,27 +392,6 @@ namespace AppLoadData
             // 
             this.bgWorkerData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerData_DoWork);
             this.bgWorkerData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerData_RunWorkerCompleted);
-            // 
-            // txtFilePath
-            // 
-            this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilePath.Enabled = false;
-            this.txtFilePath.Location = new System.Drawing.Point(371, 20);
-            this.txtFilePath.Name = "txtFilePath";
-            this.txtFilePath.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFilePath.Properties.Appearance.Options.UseFont = true;
-            this.txtFilePath.Size = new System.Drawing.Size(541, 32);
-            this.txtFilePath.TabIndex = 4;
-            // 
-            // btnFindFile
-            // 
-            this.btnFindFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFindFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
-            this.btnFindFile.Location = new System.Drawing.Point(918, 3);
-            this.btnFindFile.Name = "btnFindFile";
-            this.btnFindFile.Size = new System.Drawing.Size(46, 49);
-            this.btnFindFile.TabIndex = 5;
-            this.btnFindFile.Click += new System.EventHandler(this.btnFindFile_Click);
             // 
             // Form1
             // 
@@ -504,10 +407,9 @@ namespace AppLoadData
             ((System.ComponentModel.ISupportInitialize)(this.tabFormControl1)).EndInit();
             this.tabFormContentContainer1.ResumeLayout(false);
             this.tabFormContentContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewDataLoad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvDataLoad)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -519,7 +421,6 @@ namespace AppLoadData
         private DevExpress.XtraGrid.GridControl gridviewDataLoad;
         private DevExpress.XtraGrid.Views.Grid.GridView gvDataLoad;
         private DevExpress.XtraEditors.SimpleButton btnLoad;
-        private DevExpress.DataAccess.Excel.ExcelDataSource excelDataSource1;
         private DevExpress.XtraGrid.Columns.GridColumn colStockDetailId;
         private DevExpress.XtraGrid.Columns.GridColumn colCodigoSupervisor;
         private DevExpress.XtraGrid.Columns.GridColumn colNombreSupervisor;
@@ -546,7 +447,6 @@ namespace AppLoadData
         private DevExpress.XtraGrid.Columns.GridColumn colComent;
         private DevExpress.XtraEditors.SimpleButton btnFindFile;
         private DevExpress.XtraEditors.TextEdit txtFilePath;
-        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
     }
 }
 
