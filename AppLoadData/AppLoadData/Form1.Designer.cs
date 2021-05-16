@@ -29,7 +29,7 @@ namespace AppLoadData
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.components = new System.ComponentModel.Container();
             DevExpress.DataAccess.Excel.FieldInfo fieldInfo1 = new DevExpress.DataAccess.Excel.FieldInfo();
             DevExpress.DataAccess.Excel.FieldInfo fieldInfo2 = new DevExpress.DataAccess.Excel.FieldInfo();
             DevExpress.DataAccess.Excel.FieldInfo fieldInfo3 = new DevExpress.DataAccess.Excel.FieldInfo();
@@ -52,6 +52,7 @@ namespace AppLoadData
             DevExpress.DataAccess.Excel.FieldInfo fieldInfo20 = new DevExpress.DataAccess.Excel.FieldInfo();
             DevExpress.DataAccess.Excel.ExcelWorksheetSettings excelWorksheetSettings1 = new DevExpress.DataAccess.Excel.ExcelWorksheetSettings();
             DevExpress.DataAccess.Excel.ExcelSourceOptions excelSourceOptions1 = new DevExpress.DataAccess.Excel.ExcelSourceOptions(excelWorksheetSettings1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabFormControl1 = new DevExpress.XtraBars.TabFormControl();
             this.tabFormPage1 = new DevExpress.XtraBars.TabFormPage();
             this.tabFormContentContainer1 = new DevExpress.XtraBars.TabFormContentContainer();
@@ -61,8 +62,8 @@ namespace AppLoadData
             this.gridviewDataLoad = new DevExpress.XtraGrid.GridControl();
             this.excelDataSource1 = new DevExpress.DataAccess.Excel.ExcelDataSource();
             this.gvDataLoad = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colStockDetailId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCodigoSupervisor = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colStockDetailId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNombreSupervisor = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIdUser = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNombreVisitador = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -83,10 +84,15 @@ namespace AppLoadData
             this.collote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colComent = new DevExpress.XtraGrid.Columns.GridColumn();
             this.bgWorkerData = new System.ComponentModel.BackgroundWorker();
+            this.txtFilePath = new DevExpress.XtraEditors.TextEdit();
+            this.btnFindFile = new DevExpress.XtraEditors.SimpleButton();
+            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tabFormControl1)).BeginInit();
             this.tabFormContentContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewDataLoad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvDataLoad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabFormControl1
@@ -109,6 +115,8 @@ namespace AppLoadData
             // 
             // tabFormContentContainer1
             // 
+            this.tabFormContentContainer1.Controls.Add(this.btnFindFile);
+            this.tabFormContentContainer1.Controls.Add(this.txtFilePath);
             this.tabFormContentContainer1.Controls.Add(this.pgBar);
             this.tabFormContentContainer1.Controls.Add(this.lblCountRows);
             this.tabFormContentContainer1.Controls.Add(this.btnLoad);
@@ -265,15 +273,6 @@ namespace AppLoadData
             this.gvDataLoad.GridControl = this.gridviewDataLoad;
             this.gvDataLoad.Name = "gvDataLoad";
             // 
-            // colStockDetailId
-            // 
-            this.colStockDetailId.FieldName = "StockDetailId";
-            this.colStockDetailId.MinWidth = 25;
-            this.colStockDetailId.Name = "colStockDetailId";
-            this.colStockDetailId.Visible = true;
-            this.colStockDetailId.VisibleIndex = 0;
-            this.colStockDetailId.Width = 94;
-            // 
             // colCodigoSupervisor
             // 
             this.colCodigoSupervisor.FieldName = "CodigoSupervisor";
@@ -282,6 +281,15 @@ namespace AppLoadData
             this.colCodigoSupervisor.Visible = true;
             this.colCodigoSupervisor.VisibleIndex = 1;
             this.colCodigoSupervisor.Width = 94;
+            // 
+            // colStockDetailId
+            // 
+            this.colStockDetailId.FieldName = "StockDetailId";
+            this.colStockDetailId.MinWidth = 25;
+            this.colStockDetailId.Name = "colStockDetailId";
+            this.colStockDetailId.Visible = true;
+            this.colStockDetailId.VisibleIndex = 0;
+            this.colStockDetailId.Width = 94;
             // 
             // colNombreSupervisor
             // 
@@ -423,6 +431,8 @@ namespace AppLoadData
             this.colcantidaddebioentregar.FieldName = "cantidad debio entregar";
             this.colcantidaddebioentregar.MinWidth = 25;
             this.colcantidaddebioentregar.Name = "colcantidaddebioentregar";
+            this.colcantidaddebioentregar.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "cantidad debio entregar", "SUMA={0:#.##}")});
             this.colcantidaddebioentregar.Visible = true;
             this.colcantidaddebioentregar.VisibleIndex = 17;
             this.colcantidaddebioentregar.Width = 94;
@@ -459,6 +469,27 @@ namespace AppLoadData
             this.bgWorkerData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerData_DoWork);
             this.bgWorkerData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerData_RunWorkerCompleted);
             // 
+            // txtFilePath
+            // 
+            this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFilePath.Enabled = false;
+            this.txtFilePath.Location = new System.Drawing.Point(371, 20);
+            this.txtFilePath.Name = "txtFilePath";
+            this.txtFilePath.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFilePath.Properties.Appearance.Options.UseFont = true;
+            this.txtFilePath.Size = new System.Drawing.Size(541, 32);
+            this.txtFilePath.TabIndex = 4;
+            // 
+            // btnFindFile
+            // 
+            this.btnFindFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFindFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btnFindFile.Location = new System.Drawing.Point(918, 3);
+            this.btnFindFile.Name = "btnFindFile";
+            this.btnFindFile.Size = new System.Drawing.Size(46, 49);
+            this.btnFindFile.TabIndex = 5;
+            this.btnFindFile.Click += new System.EventHandler(this.btnFindFile_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -475,6 +506,8 @@ namespace AppLoadData
             this.tabFormContentContainer1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewDataLoad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvDataLoad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -511,6 +544,9 @@ namespace AppLoadData
         private System.ComponentModel.BackgroundWorker bgWorkerData;
         private DevExpress.XtraWaitForm.ProgressPanel pgBar;
         private DevExpress.XtraGrid.Columns.GridColumn colComent;
+        private DevExpress.XtraEditors.SimpleButton btnFindFile;
+        private DevExpress.XtraEditors.TextEdit txtFilePath;
+        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
     }
 }
 
