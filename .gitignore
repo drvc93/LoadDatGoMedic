@@ -6,3 +6,6 @@
 /AppLoadData/AppLoadData/obj/Debug
 /AppLoadData/AppLoadData/bin/x64/Debug
 /AppLoadData/AppLoadData/obj/x64/Debug
+/AppLoadData/AppLoadData/bin/x64/Release
+/AppLoadData/AppLoadData/obj/x64/Release
+/AppLoadData/packages/DocumentFormat.OpenXml.2.13.0

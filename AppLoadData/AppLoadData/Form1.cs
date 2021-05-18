@@ -6,14 +6,23 @@ using System.Windows.Forms;
 using AppLoadData.Util;
 using System.Data;
 using System.Data.OleDb;
+using System.Linq;
+using DevExpress.XtraGrid.Views.Grid;
+using System.Drawing;
+using AppLoadData.Model;
+using System.Collections.Generic;
+using AppLoadData.Data;
+using System.Text.RegularExpressions;
 
 namespace AppLoadData
 {
     public partial class Form1 : DevExpress.XtraBars.TabForm
     {
-       
+
         private DataTable dtInfo { get; set; }
-        string sSelectedPath { get; set; }
+        private List<GuiaSap> listGuias { get; set; }
+        private DBGoMedic dBGo = new DBGoMedic();
+        private static readonly Regex regex = new Regex(@"^\d+$");
 
         public Form1()
         {
@@ -32,7 +41,7 @@ namespace AppLoadData
         {
             if (string.IsNullOrEmpty(txtFilePath.Text))
             {
-                MessageBox( Constants.MESSAGE_CAPTION_ERROR, Constants.MESSAGE_FIND_FILE);
+                MessageBox(Constants.MESSAGE_CAPTION_ERROR, Constants.MESSAGE_FIND_FILE);
             }
             else
             {
@@ -45,14 +54,9 @@ namespace AppLoadData
 
         public void LoadData()
         {
+            listGuias = dBGo.ObtenerGuias();
+            dtInfo = ImportExcelXLS(txtFilePath.Text, true);
 
-            /* excelDataSource = new ExcelDataSource();
-             excelDataSource.Name = "Excel Data Source";
-             excelDataSource.FileName = txtFilePath.Text;
-             ExcelWorksheetSettings worksheetSettings = new ExcelWorksheetSettings("Historico", "A1:U400000");
-             excelDataSource.SourceOptions = new ExcelSourceOptions(worksheetSettings);
-             excelDataSource.Fill();*/
-            dtInfo = ImportExcelXLS(txtFilePath.Text , true);
 
         }
 
@@ -68,7 +72,8 @@ namespace AppLoadData
             gridviewDataLoad.DataSource = dtInfo;
             lblCountRows.Text = "Numero de filas :" + gvDataLoad.DataRowCount.ToString();
             pgBar.Visible = false;
-            ///VerifyData();
+
+
         }
 
         private void btnFindFile_Click(object sender, EventArgs e)
@@ -85,7 +90,7 @@ namespace AppLoadData
             }
         }
 
-        public void MessageBox(string caption  , string message)
+        public void MessageBox(string caption, string message)
         {
             XtraMessageBoxArgs args = new XtraMessageBoxArgs();
             args.AutoCloseOptions.Delay = 7000;
@@ -95,23 +100,43 @@ namespace AppLoadData
             XtraMessageBox.Show(args).ToString();
         }
 
-        public void VerifyData ()
+        public DataTable VerifyData(DataTable data)
         {
-            for (int i = 0; i < gvDataLoad.DataRowCount; i++)
+            for (int i = 0; i < data.Rows.Count; i++)
             {
-                var lote = gvDataLoad.GetRowCellValue(i, "lote").ToString();
-                if  (string.IsNullOrEmpty(lote) || lote.ToString() == "0")
+                var guia = data.Rows[i]["guia"].ToString();
+                var lote = data.Rows[i]["lote"].ToString();
+                if (string.IsNullOrEmpty(lote) || lote.ToString() == "0" || lote.ToString() == "-")
                 {
-                    gvDataLoad.SetRowCellValue(i, "Comentario", "Lote Invalido.");
-                    gvDataLoad.RefreshRow(i);
+                    data.Rows[i]["Comentario"] = Constants.BATCH_NOT_VALID;
+                    data.Rows[i]["FilaValida"] = false;
 
+                }
+                else if (!regex.IsMatch(guia))
+                {
+                    data.Rows[i]["Comentario"] = Constants.DELIVERY_NOT_VALID;
+                    data.Rows[i]["FilaValida"] = false;
+                }
+                else
+                {
+                    if (!listGuias.Any(x => x.DeliveryId == Convert.ToInt64(guia) ))
+                    {
+                        data.Rows[i]["Comentario"] = Constants.DELIVERY_NOT_VALID_BD;
+                        data.Rows[i]["FilaValida"] = false;
+                    }
+
+                    data.Rows[i]["FilaValida"] = true;
                 }
 
             }
+
+            data.AcceptChanges();
+
+            return data;
         }
 
 
-        public  DataTable ImportExcelXLS(string FileName, bool hasHeaders)
+        public DataTable ImportExcelXLS(string FileName, bool hasHeaders)
         {
             string HDR = hasHeaders ? "Yes" : "No";
             string strConn;
@@ -126,30 +151,42 @@ namespace AppLoadData
             {
                 conn.Open();
 
-                DataTable schemaTable = conn.GetOleDbSchemaTable(
-                    OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                string sheet = Constants.EXCEL_SHEET;
 
-                
-                    string sheet = Constants.EXCEL_SHEET;
-
-                    if (!sheet.EndsWith("_"))
+                if (!sheet.EndsWith("_"))
+                {
+                    try
                     {
-                        try
-                        {
-                            OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + sheet + "]", conn);
-                            cmd.CommandType = CommandType.Text;
-                           
-                            output.Tables.Add(outputTable);
-                            new OleDbDataAdapter(cmd).Fill(outputTable);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new Exception(ex.Message + string.Format("Sheet:{0}.File:F{1}", sheet, FileName), ex);
-                        }
+                        OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + sheet + "]", conn);
+                        cmd.CommandType = CommandType.Text;
+
+                        output.Tables.Add(outputTable);
+                        new OleDbDataAdapter(cmd).Fill(outputTable);
                     }
-                
+                    catch (Exception ex)
+                    {
+                        MessageBox(Constants.MESSAGE_CAPTION_ERROR, ex.Message);
+                    }
+                }
+
             }
-            return outputTable;
+            outputTable.Columns.Add("Comentario", typeof(string));
+            outputTable.Columns.Add("FilaValida", typeof(bool));
+            return VerifyData(outputTable);
+        }
+
+
+
+        private void gvDataLoad_RowStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs e)
+        {
+            GridView View = sender as GridView;
+
+            bool status = Convert.ToBoolean(View.GetRowCellValue(e.RowHandle, View.Columns["FilaValida"]));
+            if (!status)
+            {
+                e.Appearance.BackColor = Color.FromArgb(150, Color.Salmon);
+                e.Appearance.BackColor2 = Color.FromArgb(150, Color.Salmon);
+            }
         }
     }
 }

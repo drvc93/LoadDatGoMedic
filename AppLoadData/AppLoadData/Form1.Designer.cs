@@ -62,11 +62,14 @@ namespace AppLoadData
             this.collote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colComent = new DevExpress.XtraGrid.Columns.GridColumn();
             this.bgWorkerData = new System.ComponentModel.BackgroundWorker();
+            this.gvcolFilaValida = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.tabFormControl1)).BeginInit();
             this.tabFormContentContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewDataLoad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvDataLoad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabFormControl1
@@ -164,6 +167,8 @@ namespace AppLoadData
             this.gridviewDataLoad.Location = new System.Drawing.Point(3, 58);
             this.gridviewDataLoad.MainView = this.gvDataLoad;
             this.gridviewDataLoad.Name = "gridviewDataLoad";
+            this.gridviewDataLoad.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemCheckEdit1});
             this.gridviewDataLoad.Size = new System.Drawing.Size(1104, 384);
             this.gridviewDataLoad.TabIndex = 0;
             this.gridviewDataLoad.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -192,9 +197,12 @@ namespace AppLoadData
             this.colcantidaddebioentregar,
             this.colguia,
             this.collote,
-            this.colComent});
+            this.colComent,
+            this.gvcolFilaValida});
             this.gvDataLoad.GridControl = this.gridviewDataLoad;
             this.gvDataLoad.Name = "gvDataLoad";
+            this.gvDataLoad.OptionsView.ShowFooter = true;
+            this.gvDataLoad.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gvDataLoad_RowStyle);
             // 
             // colCodigoSupervisor
             // 
@@ -365,6 +373,8 @@ namespace AppLoadData
             this.colguia.FieldName = "guia";
             this.colguia.MinWidth = 25;
             this.colguia.Name = "colguia";
+            this.colguia.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "guia", "{0}")});
             this.colguia.Visible = true;
             this.colguia.VisibleIndex = 18;
             this.colguia.Width = 94;
@@ -374,6 +384,8 @@ namespace AppLoadData
             this.collote.FieldName = "lote";
             this.collote.MinWidth = 25;
             this.collote.Name = "collote";
+            this.collote.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "lote", "{0}")});
             this.collote.Visible = true;
             this.collote.VisibleIndex = 19;
             this.collote.Width = 94;
@@ -393,6 +405,22 @@ namespace AppLoadData
             this.bgWorkerData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerData_DoWork);
             this.bgWorkerData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerData_RunWorkerCompleted);
             // 
+            // gvcolFilaValida
+            // 
+            this.gvcolFilaValida.Caption = "Fila Valida";
+            this.gvcolFilaValida.ColumnEdit = this.repositoryItemCheckEdit1;
+            this.gvcolFilaValida.FieldName = "FilaValida";
+            this.gvcolFilaValida.MinWidth = 25;
+            this.gvcolFilaValida.Name = "gvcolFilaValida";
+            this.gvcolFilaValida.Visible = true;
+            this.gvcolFilaValida.VisibleIndex = 21;
+            this.gvcolFilaValida.Width = 94;
+            // 
+            // repositoryItemCheckEdit1
+            // 
+            this.repositoryItemCheckEdit1.AutoHeight = false;
+            this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -410,6 +438,7 @@ namespace AppLoadData
             ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridviewDataLoad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvDataLoad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -447,6 +476,8 @@ namespace AppLoadData
         private DevExpress.XtraGrid.Columns.GridColumn colComent;
         private DevExpress.XtraEditors.SimpleButton btnFindFile;
         private DevExpress.XtraEditors.TextEdit txtFilePath;
+        private DevExpress.XtraGrid.Columns.GridColumn gvcolFilaValida;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
     }
 }
 
