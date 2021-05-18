@@ -61,9 +61,11 @@ namespace AppLoadData
             this.colguia = new DevExpress.XtraGrid.Columns.GridColumn();
             this.collote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colComent = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.bgWorkerData = new System.ComponentModel.BackgroundWorker();
             this.gvcolFilaValida = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.bgWorkerData = new System.ComponentModel.BackgroundWorker();
+            this.bgInsertData = new System.ComponentModel.BackgroundWorker();
+            this.btnSaveInfo = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.tabFormControl1)).BeginInit();
             this.tabFormContentContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtFilePath.Properties)).BeginInit();
@@ -92,6 +94,7 @@ namespace AppLoadData
             // 
             // tabFormContentContainer1
             // 
+            this.tabFormContentContainer1.Controls.Add(this.btnSaveInfo);
             this.tabFormContentContainer1.Controls.Add(this.btnFindFile);
             this.tabFormContentContainer1.Controls.Add(this.txtFilePath);
             this.tabFormContentContainer1.Controls.Add(this.pgBar);
@@ -108,7 +111,7 @@ namespace AppLoadData
             // 
             this.btnFindFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFindFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnFindFile.ImageOptions.Image")));
-            this.btnFindFile.Location = new System.Drawing.Point(918, 3);
+            this.btnFindFile.Location = new System.Drawing.Point(773, 3);
             this.btnFindFile.Name = "btnFindFile";
             this.btnFindFile.Size = new System.Drawing.Size(46, 49);
             this.btnFindFile.TabIndex = 5;
@@ -118,7 +121,7 @@ namespace AppLoadData
             // 
             this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFilePath.Enabled = false;
-            this.txtFilePath.Location = new System.Drawing.Point(371, 20);
+            this.txtFilePath.Location = new System.Drawing.Point(226, 20);
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFilePath.Properties.Appearance.Options.UseFont = true;
@@ -129,15 +132,23 @@ namespace AppLoadData
             // 
             this.pgBar.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.pgBar.Appearance.Options.UseBackColor = true;
+            this.pgBar.AppearanceCaption.Options.UseTextOptions = true;
+            this.pgBar.AppearanceCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.pgBar.AppearanceCaption.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.pgBar.AppearanceDescription.Options.UseTextOptions = true;
+            this.pgBar.AppearanceDescription.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.pgBar.AppearanceDescription.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.pgBar.AppearanceDescription.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
             this.pgBar.BarAnimationElementThickness = 2;
-            this.pgBar.Location = new System.Drawing.Point(427, 219);
+            this.pgBar.Location = new System.Drawing.Point(391, 108);
             this.pgBar.Name = "pgBar";
-            this.pgBar.Size = new System.Drawing.Size(246, 66);
+            this.pgBar.RingAnimationDiameter = 100;
+            this.pgBar.Size = new System.Drawing.Size(441, 246);
             this.pgBar.TabIndex = 3;
             this.pgBar.TabStop = false;
             this.pgBar.Text = "progressPanel1";
             this.pgBar.UseWaitCursor = true;
-            this.pgBar.WaitAnimationType = DevExpress.Utils.Animation.WaitingAnimatorType.Bar;
+            this.pgBar.WaitAnimationType = DevExpress.Utils.Animation.WaitingAnimatorType.Line;
             // 
             // lblCountRows
             // 
@@ -209,6 +220,7 @@ namespace AppLoadData
             this.colCodigoSupervisor.FieldName = "CodigoSupervisor";
             this.colCodigoSupervisor.MinWidth = 25;
             this.colCodigoSupervisor.Name = "colCodigoSupervisor";
+            this.colCodigoSupervisor.OptionsColumn.AllowEdit = false;
             this.colCodigoSupervisor.Visible = true;
             this.colCodigoSupervisor.VisibleIndex = 1;
             this.colCodigoSupervisor.Width = 94;
@@ -218,6 +230,7 @@ namespace AppLoadData
             this.colStockDetailId.FieldName = "StockDetailId";
             this.colStockDetailId.MinWidth = 25;
             this.colStockDetailId.Name = "colStockDetailId";
+            this.colStockDetailId.OptionsColumn.AllowEdit = false;
             this.colStockDetailId.Visible = true;
             this.colStockDetailId.VisibleIndex = 0;
             this.colStockDetailId.Width = 94;
@@ -400,11 +413,6 @@ namespace AppLoadData
             this.colComent.VisibleIndex = 20;
             this.colComent.Width = 94;
             // 
-            // bgWorkerData
-            // 
-            this.bgWorkerData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerData_DoWork);
-            this.bgWorkerData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerData_RunWorkerCompleted);
-            // 
             // gvcolFilaValida
             // 
             this.gvcolFilaValida.Caption = "Fila Valida";
@@ -421,6 +429,27 @@ namespace AppLoadData
             this.repositoryItemCheckEdit1.AutoHeight = false;
             this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             // 
+            // bgWorkerData
+            // 
+            this.bgWorkerData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerData_DoWork);
+            this.bgWorkerData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerData_RunWorkerCompleted);
+            // 
+            // bgInsertData
+            // 
+            this.bgInsertData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgInsertData_DoWork);
+            this.bgInsertData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgInsertData_RunWorkerCompleted);
+            // 
+            // btnSaveInfo
+            // 
+            this.btnSaveInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveInfo.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btnSaveInfo.Location = new System.Drawing.Point(827, 3);
+            this.btnSaveInfo.Name = "btnSaveInfo";
+            this.btnSaveInfo.Size = new System.Drawing.Size(137, 49);
+            this.btnSaveInfo.TabIndex = 6;
+            this.btnSaveInfo.Text = "Guardar Info.";
+            this.btnSaveInfo.Click += new System.EventHandler(this.btnSaveInfo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -431,6 +460,7 @@ namespace AppLoadData
             this.Name = "Form1";
             this.TabFormControl = this.tabFormControl1;
             this.Text = "Carga Informacion MM.";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabFormControl1)).EndInit();
             this.tabFormContentContainer1.ResumeLayout(false);
@@ -478,6 +508,8 @@ namespace AppLoadData
         private DevExpress.XtraEditors.TextEdit txtFilePath;
         private DevExpress.XtraGrid.Columns.GridColumn gvcolFilaValida;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
+        private System.ComponentModel.BackgroundWorker bgInsertData;
+        private DevExpress.XtraEditors.SimpleButton btnSaveInfo;
     }
 }
 

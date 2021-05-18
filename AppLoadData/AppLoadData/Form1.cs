@@ -23,6 +23,7 @@ namespace AppLoadData
         private List<GuiaSap> listGuias { get; set; }
         private DBGoMedic dBGo = new DBGoMedic();
         private static readonly Regex regex = new Regex(@"^\d+$");
+        private string InsertResult = string.Empty;
 
         public Form1()
         {
@@ -46,6 +47,7 @@ namespace AppLoadData
             else
             {
                 btnLoad.Enabled = false;
+                btnSaveInfo.Enabled = false;
                 pgBar.Visible = true;
                 bgWorkerData.DoWork += new DoWorkEventHandler(bgWorkerData_DoWork);
                 bgWorkerData.RunWorkerAsync();
@@ -72,6 +74,7 @@ namespace AppLoadData
             gridviewDataLoad.DataSource = dtInfo;
             lblCountRows.Text = "Numero de filas :" + gvDataLoad.DataRowCount.ToString();
             pgBar.Visible = false;
+            btnSaveInfo.Enabled = true;
 
 
         }
@@ -119,7 +122,7 @@ namespace AppLoadData
                 }
                 else
                 {
-                    if (!listGuias.Any(x => x.DeliveryId == Convert.ToInt64(guia) ))
+                    if (!listGuias.Any(x => x.DeliveryId == Convert.ToInt64(guia)))
                     {
                         data.Rows[i]["Comentario"] = Constants.DELIVERY_NOT_VALID_BD;
                         data.Rows[i]["FilaValida"] = false;
@@ -187,6 +190,53 @@ namespace AppLoadData
                 e.Appearance.BackColor = Color.FromArgb(150, Color.Salmon);
                 e.Appearance.BackColor2 = Color.FromArgb(150, Color.Salmon);
             }
+        }
+
+        private void bgInsertData_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var msgResult = dBGo.DeleteTemporalTable();
+            if (msgResult == Constants.OPERATION_OK)
+            {
+                InsertResult = dBGo.InsertarData(dtInfo);
+
+                if (InsertResult == Constants.INSERT_OK)
+                {
+                    InsertResult = dBGo.UpdateStock();
+                }
+
+                else
+                {
+                    MessageBox(Constants.MESSAGE_CAPTION_ERROR, InsertResult);
+                }
+            }
+            else
+            {
+                MessageBox(Constants.MESSAGE_CAPTION_ERROR, msgResult);
+            }
+        }
+
+        private void btnSaveInfo_Click(object sender, EventArgs e)
+        {
+            if (gvDataLoad.RowCount <= 0)
+            {
+                MessageBox(Constants.MESSAGE_CAPTION_ERROR, Constants.FIRST_LOAD_INFO);
+            }
+            else
+            {
+                btnLoad.Enabled = false;
+                btnSaveInfo.Enabled = false;
+                pgBar.Visible = true;
+                bgInsertData.DoWork += new DoWorkEventHandler(bgInsertData_DoWork);
+                bgInsertData.RunWorkerAsync();
+            }
+        }
+
+        private void bgInsertData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnLoad.Enabled = true;
+            btnSaveInfo.Enabled = true;
+            pgBar.Visible = false;
+            MessageBox("Información", InsertResult);
         }
     }
 }
